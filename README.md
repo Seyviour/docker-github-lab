@@ -1,7 +1,7 @@
-# docker-github-lab
-# Lab 22: Building from GitHub in Docker
+### docker-tutorial (forked from [https://github.com/rasikh111/docker-github-lab.git](https://github.com/rasikh111/docker-github-lab.git))
+# Tutorial 4: Containerization and Docker
 
-This lab demonstrates how to integrate **Docker** with **GitHub** effectively by creating a simple Flask application, building a Docker image, running it locally, and automating builds using **GitHub Actions**.
+This lab demonstrates how to integrate **Docker** with **GitHub** effectively by creating a simple Flask application, building a Docker image, running it locally, and sharing it through **Docker Hub**.
 
 ---
 
@@ -9,7 +9,7 @@ This lab demonstrates how to integrate **Docker** with **GitHub** effectively by
 - Understand how to integrate Docker with GitHub.
 - Learn to create and configure a `Dockerfile` in a GitHub repository.
 - Gain hands-on experience cloning, building, and running a Docker container.
-- Explore automation strategies for Docker builds using CI/CD tools like GitHub Actions.
+- Learn how to tag and share Docker images using Docker Hub.
 
 ---
 
@@ -77,45 +77,31 @@ Run the container:
 docker run -p 5000:5000 my-flask-app
 
 Now visit: 👉 http://localhost:5000
-✅ Task 3: Automate Builds with GitHub Actions
 
-    Add GitHub Actions workflow (.github/workflows/docker-image.yml):
 
-name: Docker Image CI
+✅ Task 3: Push image to Docker Hub
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+1. **Create a Docker Hub account** at [hub.docker.com](https://hub.docker.com/) if you do not already have one.
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+2. **Log in** to Docker Hub from your terminal:
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+   ```bash
+   docker login
+   ```
 
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile
-          push: false
-          tags: my-flask-app:latest
+3. **Tag** your image with your Docker Hub username. Replace `YOUR-USERNAME` with your Docker Hub ID:
 
-Commit and push workflow:
+   ```bash
+   docker tag my-flask-app YOUR-USERNAME/my-flask-app:v1.0
+   ```
 
-    git add .github/workflows/docker-image.yml
-    git commit -m "Add GitHub Actions workflow for Docker build"
-    git push origin main
+4. **Push** the tagged image to Docker Hub:
 
-    ✅ Every push to the main branch will now automatically trigger a Docker build.
+   ```bash
+   docker push YOUR-USERNAME/my-flask-app:v1.0
+   ```
+
+5. Visit your repository on Docker Hub and confirm that the `v1.0` image appears.
 
 🏁 Conclusion
 
@@ -125,9 +111,9 @@ By completing this lab, you have learned how to:
 
     Build and run Docker containers locally.
 
-    Automate Docker builds with GitHub Actions.
+    Tag and push Docker images to Docker Hub.
 
-This workflow enhances your DevOps pipeline and makes your application deployment more efficient and reliable. 🎉
+This workflow makes your application easier to share, distribute, and run on other systems. 🎉
 📌 Repository Structure
 
 docker-github-lab/
