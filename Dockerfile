@@ -6,7 +6,7 @@ COPY . /app
 #Install the requirements
 RUN pip install flask
 #Make port 5000 available to the world outside this container
-EXPOSE 8000
+EXPOSE 5000
 # if you use a different port, e.g., 8000, change the line above to EXPOSE 8000
 #Define the command to run the application
 CMD ["python", "app.py"]
